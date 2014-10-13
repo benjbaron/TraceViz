@@ -4,12 +4,14 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui positioning
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = EvolvingGraphViz
 TEMPLATE = app
+
+QMAKE_MAC_SDK = macosx10.9
 
 
 SOURCES += main.cpp\
