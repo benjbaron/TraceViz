@@ -114,8 +114,6 @@ void MainWindow::open()
 //    }
 //    qDebug() << "End writing contacts";
 
-
-
     this->setCentralWidget(gv);
 //    gv->startTimer();
 }

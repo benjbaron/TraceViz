@@ -138,13 +138,6 @@ void GraphViewer::paintEvent(QPaintEvent * event)
     // Draw each active agent
     foreach(Agent* agent, agents)
     {
-        // Transform the current position of the node to fit the canevas
-        QGeoCoordinate agentPostion = agent->currentPosition;
-//        qDebug() << agentPostion << " | " << translatePosition(agentPostion);
-        painter.setPen(QPen(QColor(0,0,0,255))); // Contours
-        painter.setBrush(QBrush(QColor(0,0,0,255))); // Filling
-        painter.drawEllipse(translatePosition(agentPostion), 30, 30);
-
         // Draw the past trajectory for the current examined agent
         QList <quint64> timestampsList = agent->positions.keys();
         quint64 prevTimestamp = timestampsList[0];
@@ -177,6 +170,12 @@ void GraphViewer::paintEvent(QPaintEvent * event)
             prevTimestamp = nextTimestamp;
         }
 
+        // Transform the current position of the node to fit the canevas
+        QGeoCoordinate agentPostion = agent->currentPosition;
+        painter.setPen(QPen(QColor(0,0,0,255))); // Contours
+        painter.setBrush(QBrush(QColor(0,0,0,255))); // Filling
+        painter.drawEllipse(translatePosition(agentPostion), 5, 5);
+
     }
 
     // Draw the contacts between neighbor active agents
@@ -186,7 +185,7 @@ void GraphViewer::paintEvent(QPaintEvent * event)
         // Not optimized: only the top half of the loop
         foreach(Agent* neig, agents)
         {
-            if(agent->currentPosition != neig->currentPosition && agent->currentPosition.distanceTo(neig->currentPosition) < qMin(agent->range, neig->range))
+            if(agent->currentPosition.distanceTo(neig->currentPosition) < qMin(agent->range, neig->range))
             {
                 // Draw a line between the two nodes if they are in each other's transmission range
                 QPointF agentPoint = translatePosition(agent->currentPosition);
